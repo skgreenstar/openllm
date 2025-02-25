@@ -2,6 +2,8 @@
 
 from langchain.embeddings import HuggingFaceEmbeddings
 from langchain.vectorstores import Qdrant
+from sentence_transformers import SentenceTransformer
+from langchain.embeddings import HuggingFaceEmbeddings
 
 def embed_and_store(docs):
     """
@@ -9,7 +11,11 @@ def embed_and_store(docs):
     Qdrant 벡터 DB에 저장한 후 해당 VectorStore 객체를 반환
     """
     # Sentence Transformers 기반 임베딩 모델
-    embedding_model = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
+    #embedding_model = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
+
+    # fine-tuning된 모델 로드
+    fine_tuned_model_path = "output/finetuned-model"
+    embedding_model = HuggingFaceEmbeddings(model_name=fine_tuned_model_path)
 
     # Qdrant에 임베딩된 문서 저장
     vector_db = Qdrant.from_documents(
