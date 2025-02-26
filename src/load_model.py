@@ -44,4 +44,3 @@ def load_mistral_model(base_model_name="mistralai/Mistral-7B-v0.3", lora_path="o
     # HuggingFacePipeline으로 래핑하여 LangChain의 LLM 인터페이스에 맞춥니다.
     llm = HuggingFacePipeline(pipeline=llm_pipeline)
     return llm
-

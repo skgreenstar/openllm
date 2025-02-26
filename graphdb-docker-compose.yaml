@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+  neo4j:
+    image: neo4j:5.9.0  # 최신 LTS 버전 사용
+    container_name: neo4j_graphdb
+    restart: always
+    ports:
+      - "7474:7474"  # HTTP API 포트
+      - "7687:7687"  # Bolt 프로토콜 (Driver 연결)
+      - "7473:7473"  # HTTPS API 포트
+    volumes:
+      - neo4j_data:/data
+      - neo4j_logs:/logs
+      - neo4j_conf:/conf
+    environment:
+      NEO4J_AUTH: "neo4j/strongpassword"  # 초기 사용자명/비밀번호
+      NEO4J_dbms_memory_pagecache_size: "2G"  # 페이지 캐시 메모리 최적화
+      NEO4J_dbms_memory_heap_initial__size: "1G"
+      NEO4J_dbms_memory_heap_max__size: "4G"
+      NEO4J_dbms_security_auth__enabled: "true"  # 인증 활성화
+      NEO4J_dbms_logs_debug__level: "INFO"  # 디버그 레벨 (DEBUG, INFO, WARN)
+      NEO4J_dbms_connector_https_enabled: "true"  # HTTPS 활성화
+      NEO4J_dbms_mode: "SINGLE"  # 단일 노드 (클러스터 모드 변경 가능)
+    deploy:
+      resources:
+        limits:
+          cpus: "2.5"  # 최대 CPU 2.5개 할당
+          memory: "6G"  # 최대 6GB 메모리 사용
+        reservations:
+          cpus: "1.0"  # 최소 1개 CPU 보장
+          memory: "3G"  # 최소 3GB 메모리 보장
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:7474"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+volumes:
+  neo4j_data:
+    driver: local
+  neo4j_logs:
+    driver: local
+  neo4j_conf:
+    driver: local
