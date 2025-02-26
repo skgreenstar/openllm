@@ -1,4 +1,4 @@
-version: '3.8'
+version: '3.3'
 
 services:
   neo4j:
@@ -21,7 +21,6 @@ services:
       NEO4J_dbms_security_auth__enabled: "true"  # 인증 활성화
       NEO4J_dbms_logs_debug__level: "INFO"  # 디버그 레벨 (DEBUG, INFO, WARN)
       NEO4J_dbms_connector_https_enabled: "true"  # HTTPS 활성화
-      NEO4J_dbms_mode: "SINGLE"  # 단일 노드 (클러스터 모드 변경 가능)
     deploy:
       resources:
         limits:
