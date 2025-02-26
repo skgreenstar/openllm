@@ -19,8 +19,8 @@ services:
       NEO4J_dbms_memory_heap_initial__size: "1G"
       NEO4J_dbms_memory_heap_max__size: "4G"
       NEO4J_dbms_security_auth__enabled: "true"  # 인증 활성화
-      NEO4J_dbms_logs_debug__level: "INFO"  # 디버그 레벨 (DEBUG, INFO, WARN)
       NEO4J_dbms_connector_https_enabled: "true"  # HTTPS 활성화
+      NEO4J_server_config_strict_validation_enabled: "false"  # strict validation 비활성화
     deploy:
       resources:
         limits:
